@@ -1,4 +1,4 @@
-"""network2.py
+﻿"""network2.py
 ~~~~~~~~~~~~~~
 
 An improved version of network.py, implementing the stochastic
@@ -10,6 +10,8 @@ easily modifiable.  It is not optimized, and omits many desirable
 features.
 
 """
+
+# -*- coding: UTF-8 -*-
 
 #### Libraries
 # Standard library
@@ -284,7 +286,9 @@ class Network(object):
             if convert: y = vectorized_result(y)
             cost += self.cost.fn(a, y)/len(data)
         cost += 0.5*(lmbda/len(data))*sum(
-            np.linalg.norm(w)**2 for w in self.weights)
+            np.linalg.norm(w)**2 for w in self.weights) 
+            
+        ''' w是矩阵，对其求范数再平方，相当于求矩阵中所有元素的平方和 '''
         return cost
 
     def save(self, filename):
@@ -307,6 +311,7 @@ def load(filename):
     data = json.load(f)
     f.close()
     cost = getattr(sys.modules[__name__], data["cost"])
+    """获取当前文件(模块)下名称为data["cost"]的对象（类对象或者函数对象）"""
     net = Network(data["sizes"], cost=cost)
     net.weights = [np.array(w) for w in data["weights"]]
     net.biases = [np.array(b) for b in data["biases"]]

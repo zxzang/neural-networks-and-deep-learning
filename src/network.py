@@ -1,4 +1,4 @@
-"""
+﻿"""
 network.py
 ~~~~~~~~~~
 
@@ -9,12 +9,17 @@ simple, easily readable, and easily modifiable.  It is not optimized,
 and omits many desirable features.
 """
 
+# -*- coding: UTF-8 -*-
+#coding=utf-8
+
 #### Libraries
 # Standard library
 import random
 
 # Third-party libraries
 import numpy as np
+
+
 
 class Network(object):
 
@@ -34,6 +39,12 @@ class Network(object):
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
+        '''
+        numpy.random.randn(d0, d1, ..., dn)
+        这个函数的作用就是从标准正态分布中返回一个或多个样本值。
+        d0, d1, …, dn：应该为正整数，表示维度。
+        返回值ndarray或者float。
+        '''
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
@@ -74,7 +85,7 @@ class Network(object):
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
         for x, y in mini_batch:
-            delta_nabla_b, delta_nabla_w = self.backprop(x, y)
+            delta_nabla_b, delta_nabla_w = self.backprop(x, y) # 这里的delta，就是对应于每个x的nabla，后续需要对所有的nabla求和
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
         self.weights = [w-(eta/len(mini_batch))*nw
