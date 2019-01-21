@@ -16,6 +16,8 @@ import mnist_loader
 import network2
 
 # Third-party libraries
+# import matplotlib as mpl
+# mpl.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -53,7 +55,7 @@ def run_network(filename, num_epochs, training_set_size=1000, lmbda=0.0):
     random.seed(12345678)
     np.random.seed(12345678)
     training_data, validation_data, test_data = mnist_loader.load_data_wrapper()
-    net = network2.Network([784, 30, 10], cost=network2.CrossEntropyCost())
+    net = network2.Network([784, 3, 10], cost=network2.CrossEntropyCost())
     net.large_weight_initializer()
     test_cost, test_accuracy, training_cost, training_accuracy \
         = net.SGD(training_data[:training_set_size], num_epochs, 10, 0.5,
@@ -98,6 +100,7 @@ def plot_training_cost(training_cost, num_epochs, training_cost_xmin):
     ax.set_xlabel('Epoch')
     ax.set_title('Cost on the training data')
     plt.show()
+    plt.savefig('overfitting-p1.png')
 
 def plot_test_accuracy(test_accuracy, num_epochs, test_accuracy_xmin):
     fig = plt.figure()
@@ -111,6 +114,7 @@ def plot_test_accuracy(test_accuracy, num_epochs, test_accuracy_xmin):
     ax.set_xlabel('Epoch')
     ax.set_title('Accuracy (%) on the test data')
     plt.show()
+    plt.savefig('overfitting-p2.png')
 
 def plot_test_cost(test_cost, num_epochs, test_cost_xmin):
     fig = plt.figure()
@@ -123,6 +127,7 @@ def plot_test_cost(test_cost, num_epochs, test_cost_xmin):
     ax.set_xlabel('Epoch')
     ax.set_title('Cost on the test data')
     plt.show()
+    plt.savefig('overfitting-p3.png')
 
 def plot_training_accuracy(training_accuracy, num_epochs, 
                            training_accuracy_xmin, training_set_size):
@@ -137,6 +142,7 @@ def plot_training_accuracy(training_accuracy, num_epochs,
     ax.set_xlabel('Epoch')
     ax.set_title('Accuracy (%) on the training data')
     plt.show()
+    plt.savefig('overfitting-p4.png')
 
 def plot_overlay(test_accuracy, training_accuracy, num_epochs, xmin,
                  training_set_size):
@@ -157,6 +163,7 @@ def plot_overlay(test_accuracy, training_accuracy, num_epochs, xmin,
     ax.set_ylim([90, 100])
     plt.legend(loc="lower right")
     plt.show()
+    plt.savefig('overfitting-p5.png')
 
 if __name__ == "__main__":
     filename = raw_input("Enter a file name: ")
